@@ -1,7 +1,18 @@
 #include "Computer.h"
 #include "iostream"
+#include "Common.h"
 
-SquareMatrix & Computer::Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWork)
+Computer::Computer(bool showProgress):_showProgress(showProgress)
+{
+    // Определяем количество ядер процессора
+    unsigned int CPUNumber = std::thread::hardware_concurrency();
+    for (int i=0;i<CPUNumber;i++)
+    {
+        CPUs.push_back(CPU());
+    }
+}
+
+SquareMatrix Computer::Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWork)
 {
     if (A.size()!=B.size())
     {
@@ -26,7 +37,7 @@ SquareMatrix & Computer::Multiply( SquareMatrix & A, SquareMatrix & B, int CPUTo
 
     std::vector<std::pair<int,int>>limits = getLimitsForCPU(A.size(),CPUToWork);
 
-    this->launchMultiplication(A,B,result,limits);
+    this->progressMultiplication(A,B,result,limits);
 
     return result;
 }
@@ -36,6 +47,7 @@ std::vector<std::pair<int,int>>Computer::getLimitsForCPU(int matrixSize,int CPUT
     std::vector<std::pair<int,int>>result;
 
     // Если количество задействованных ядер больше, чем строк в матрице - выкидываем иключение
+    //  Вообще в этом нет ничего страшного, можно одному ядру не целую строку, а какую-то её часть, но мне лень это реализовывать :)
     if ( matrixSize/CPUToWork < 1.0 )
     {
         throw "ERROR! Number of action CPU more than matrix size";
@@ -64,9 +76,9 @@ std::vector<std::pair<int,int>>Computer::getLimitsForCPU(int matrixSize,int CPUT
     return result;
 }
 
-void Computer::launchMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix & result,  std::vector<std::pair<int,int>> pairs)
+void Computer::progressMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix & result,  std::vector<std::pair<int,int>> pairs)
 {
-    for (int i=0;i<pairs.size();i++)
+    for (unsigned int i=0;i<pairs.size();i++)
     {
         CPUs[i].launchMultiplication(A,B,result,pairs[i].first,pairs[i].second);
     }
@@ -75,16 +87,30 @@ void Computer::launchMultiplication( SquareMatrix & A, SquareMatrix & B, SquareM
     do
     {
         oneStillWorks = false;
-        for (int i=0;i<pairs.size();i++)
+        for (unsigned int i=0;i<pairs.size();i++)
         {
-            if ( CPUs[i].getProcessed()<CPUs[i].getTotal() )
+            int total = CPUs[i].getTotal();
+            int processed = CPUs[i].getProcessed();
+
+            if (_showProgress)
+            {
+                ClearScreen();
+                for (unsigned int j=0;j<pairs.size();j++)
+                {
+                    std::cout << "\tCPU"<<j<<"\t"<<CPUs[j].getProcessed()<< "\t"<<CPUs[j].getTotal()<<std::endl;
+                }
+
+            }
+
+
+            if ( processed<total)
                 oneStillWorks = true;
         }
     }
     while(oneStillWorks);
 
     // Вызываем всем CPU join
-    for (int i=0;i<pairs.size();i++)
+    for (unsigned int i=0;i<pairs.size();i++)
     {
         CPUs[i].Join();
     }

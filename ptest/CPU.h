@@ -28,12 +28,12 @@ public:
 
     int getTotal()
     {
-
+        return this->_total;
     }
 
     int getProcessed()
     {
-
+        return  this->_processed;
     }
 
 };

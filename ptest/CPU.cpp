@@ -21,10 +21,25 @@ void CPU::launchMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix
 
 void CPU::DoMultiplication(SquareMatrix & A, SquareMatrix & B, SquareMatrix & result, int & begin, int & end)
 {
+    /*
     for (int i=0;i<10;i++)
     {
         std::cout<<"begin="<<begin<<" end="<<end<<std::endl;
         Sleep(1000);
+    }
+    */
+
+    for (int i=begin;i<=end;i++)
+    {
+        for (int j=0;j<A.size();j++)
+        {
+            result[i][j] = 0;
+            for (int k=0;k<A.size();k++)
+            {
+                result[i][j] += (A[i][k]*B[k][j]);
+            }
+            this->_processed++;
+        }
     }
 
 }

@@ -3,8 +3,6 @@
 
 #include <vector>
 #include <iostream>
-
-
 class Row
 {
      private:
@@ -13,6 +11,9 @@ class Row
           {
             body = std::vector<int>(size);
           }
+
+
+
           friend class SquareMatrix;
 public:
           int& operator [](const int k)
@@ -28,17 +29,22 @@ class SquareMatrix
             std::vector<Row> rows;
             static int maxSize;
       public:
-            SquareMatrix(int size);
+            SquareMatrix(int size, bool randomFill=false);
 
             Row& operator [](const int& i)
             {
                  return rows[i];
             }
 
-            int size()
+            int size() const
             {
                 return rows.size();
             }
+            friend bool operator== (SquareMatrix &sm1,SquareMatrix &sm2);
+            friend bool operator!= (SquareMatrix &sm1,SquareMatrix &sm2);
 };
+
+bool operator== (SquareMatrix &sm1, SquareMatrix &sm2);
+bool operator!= (SquareMatrix &sm1, SquareMatrix &sm2);
 
 #endif // SQUAREMATRIX_H
