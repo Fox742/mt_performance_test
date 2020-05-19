@@ -2,6 +2,8 @@
 #include <vector>
 #include "SquareMatrix.h"
 #include "Computer.h"
+#include "PreciseTimer.h"
+#include "windows.h"
 
 using namespace std;
 
@@ -195,11 +197,23 @@ void test4()
 void test5()
 {
     Computer c(true);
-    SquareMatrix sm1 = SquareMatrix(10000,true);
-    SquareMatrix sm2 = SquareMatrix(10000,true);
+    SquareMatrix sm1 = SquareMatrix(2000,true);
+    SquareMatrix sm2 = SquareMatrix(2000,true);
     SquareMatrix result1 = c.Multiply( sm1,sm2, 12);
     cout << "Multiplied!"<<std::endl;
 
+}
+
+void test6()
+{
+    PreciseTimer pt;
+    pt.startMeasure();
+    Sleep(10000);
+    cout<<pt.stopMeasure()<<std::endl;
+    Sleep(5000);
+    pt.startMeasure();
+    Sleep(15000);
+    cout<<pt.stopMeasure()<<std::endl;
 }
 
 int main()
@@ -208,7 +222,7 @@ int main()
     //test2();
     //test3();
     //test4();
-    test5();
-
+    //test5();
+    test6();
     return 0;
 }

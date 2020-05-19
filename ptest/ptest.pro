@@ -8,6 +8,7 @@ SOURCES += \
         Common.cpp \
         Computer.cpp \
         MatrixRandom.cpp \
+        PreciseTimer.cpp \
         SquareMatrix.cpp \
         main.cpp
 
@@ -16,4 +17,5 @@ HEADERS += \
     Common.h \
     Computer.h \
     MatrixRandom.h \
+    PreciseTimer.h \
     SquareMatrix.h
