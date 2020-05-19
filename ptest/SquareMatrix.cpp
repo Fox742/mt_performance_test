@@ -33,6 +33,23 @@ SquareMatrix::SquareMatrix(int size, bool randomFill)
 }
 
 
+std::string SquareMatrix::toString()
+{
+    std::string result = "";
+
+    for (unsigned int i=0;i<rows.size();i++)
+    {
+        for (unsigned int j=0;j<rows.size();j++)
+        {
+            result+= (std::string ("\t") + std::to_string(rows[i][j]));
+        }
+        result += std::string("\n");
+    }
+
+    return result;
+}
+
+
 bool operator== (SquareMatrix &sm1, SquareMatrix &sm2)
 {
 

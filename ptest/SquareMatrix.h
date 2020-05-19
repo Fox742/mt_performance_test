@@ -40,6 +40,9 @@ class SquareMatrix
             {
                 return rows.size();
             }
+
+            std::string toString();
+
             friend bool operator== (SquareMatrix &sm1,SquareMatrix &sm2);
             friend bool operator!= (SquareMatrix &sm1,SquareMatrix &sm2);
 };

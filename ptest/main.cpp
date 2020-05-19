@@ -25,50 +25,23 @@ void test1()
     sm2[3][0]=0;     sm2[3][1]=-1;   sm2[3][2]=-2;   sm2[3][3]=1;
 
     std::cout << "SM1:"<<std::endl;
-    for (int i=0;i<sm1.size();i++)
-    {
-        for (int j=0;j<sm1.size();j++)
-        {
-            std::cout << "\t" << sm1[i][j];
-        }
-        std::cout<<std::endl;
-    }
+    std::cout << sm1.toString();
     std::cout<<std::endl;
 
     std::cout << "SM2:"<<std::endl;
-    for (int i=0;i<sm2.size();i++)
-    {
-        for (int j=0;j<sm2.size();j++)
-        {
-            std::cout << "\t" << sm2[i][j];
-        }
-        std::cout<<std::endl;
-    }
+
+    std::cout << sm2.toString();
 
     Computer c;
     SquareMatrix result = c.Multiply( sm1,sm2 );
 
     std::cout << "RESULT:"<<std::endl;
-    for (int i=0;i<result.size();i++)
-    {
-        for (int j=0;j<result.size();j++)
-        {
-            std::cout << "\t" << result[i][j];
-        }
-        std::cout<<std::endl;
-    }
+    std::cout << result.toString();
 
     SquareMatrix result2 = c.Multiply( sm1,sm2, 2 );
 
     std::cout << "RESULT2:"<<std::endl;
-    for (int i=0;i<result2.size();i++)
-    {
-        for (int j=0;j<result2.size();j++)
-        {
-            std::cout << "\t" << result2[i][j];
-        }
-        std::cout<<std::endl;
-    }
+    std::cout << result2.toString();
 }
 
 void test2()
@@ -133,50 +106,22 @@ void test3()
 
 
     std::cout << "SM1:"<<std::endl;
-    for (int i=0;i<sm1.size();i++)
-    {
-        for (int j=0;j<sm1.size();j++)
-        {
-            std::cout << "\t" << sm1[i][j];
-        }
-        std::cout<<std::endl;
-    }
+    std::cout<<sm1.toString();
     std::cout<<std::endl;
 
     std::cout << "SM2:"<<std::endl;
-    for (int i=0;i<sm2.size();i++)
-    {
-        for (int j=0;j<sm2.size();j++)
-        {
-            std::cout << "\t" << sm2[i][j];
-        }
-        std::cout<<std::endl;
-    }
+    std::cout << sm2.toString();
 
     Computer c;
     SquareMatrix result = c.Multiply( sm1,sm2 );
 
     std::cout << "RESULT:"<<std::endl;
-    for (int i=0;i<result.size();i++)
-    {
-        for (int j=0;j<result.size();j++)
-        {
-            std::cout << "\t" << result[i][j];
-        }
-        std::cout<<std::endl;
-    }
+    std::cout << result.toString();
 
     SquareMatrix result2 = c.Multiply( sm1,sm2, 3 );
 
     std::cout << "RESULT2:"<<std::endl;
-    for (int i=0;i<result2.size();i++)
-    {
-        for (int j=0;j<result2.size();j++)
-        {
-            std::cout << "\t" << result2[i][j];
-        }
-        std::cout<<std::endl;
-    }
+    std::cout << result2.toString();
 }
 
 void test4()
@@ -218,11 +163,11 @@ void test6()
 
 int main()
 {
-    //test1();
-    //test2();
-    //test3();
-    //test4();
+    test1();
+    test2();
+    test3();
+    test4();
     //test5();
-    test6();
+    //test6();
     return 0;
 }
