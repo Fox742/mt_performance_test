@@ -36,6 +36,8 @@ private:
     void SmallPerformanceTest();        // Тест производительности на маленьких матрицах, при котором в теории выигрывает
                                         //маленькое число задействованных ядер процессоров
 
+    void CustomPerformanceTest( unsigned int elementsNumber, int CPUNumber = -1 );
+
     void ProgrammTest();                // Тест работоспособности программы, используемые мной при разработке программы
 
     std::vector<PerformanceTest::StatisticItem>experimentSeries(std::vector<int> matrixLineSize, std::vector<int> CPUNumber, std::string folderName, unsigned int attemptsNumber = 10);
@@ -48,6 +50,9 @@ private:
     void saveToFile(StatisticItem, std::string folderName);
 
     std::vector<int> CPUNumbers = std::vector<int>({ 1, 2, 4, 6, 8, 9, 12 });
+
+    bool getIntNumberFromUser(int&number,int argumentPosition,int argc, char* argv[],std::string fieldName,bool emptyAllowed = false);
+
 public:
     int main(int argc, char* argv[]);
 };

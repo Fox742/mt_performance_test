@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <Common.h>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -29,6 +30,20 @@ void PerformanceTest::SmallPerformanceTest()
     Utils::DeleteFolder(path);
     std::vector<int> matrixLineSizes = std::vector<int>({ 10000, 20000, 30000, 40000, 50000,60000,70000,80000,90000,100000 });
     std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes, this->CPUNumbers, path,50);
+    printResults(path,results);
+}
+
+void PerformanceTest::CustomPerformanceTest( unsigned int elementsNumber, int CPUNumber)
+{
+    std::string path = "custom_performance_tests";
+    Utils::DeleteFolder(path);
+    std::vector<int> matrixLineSizes = std::vector<int>({ int(elementsNumber)});
+    std::vector<int> CPUs = this->CPUNumbers;
+    if (CPUNumber!=-1)
+    {
+        CPUs = std::vector<int>({ int(CPUNumber)});
+    }
+    std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes, CPUs, path,1);
     printResults(path,results);
 }
 
@@ -124,7 +139,7 @@ std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(st
                             matrixLineSize[i],
                             matrixSize,
                             timeSpentAvg,
-                            CPUNumbers[j]
+                            CPUNumber[j]
                         );
             results.push_back(si);
             this->saveToFile(si,folderName);
@@ -153,6 +168,45 @@ bool PerformanceTest::oneExpirement(int elementsNumber, int cpuNumber, int matri
     return true;
 }
 
+bool PerformanceTest::getIntNumberFromUser(int&number,int argumentPosition,int argc, char* argv[],std::string fieldName,bool emptyAllowed)
+{
+    std::string StrInt = "";
+    if (argumentPosition<argc)
+    {
+        StrInt = argv[argumentPosition];
+        try
+            {
+                std::stringstream ss(StrInt);
+
+                int i;
+                if ((ss >> number).fail() || !(ss >> std::ws).eof())
+                {
+                    throw std::bad_cast();
+                }
+                return true;
+            }
+            catch(...)
+            {
+            }
+    }
+
+    std::cout << "Please, enter "+fieldName<<": ";
+    try
+    {
+        std::cin >> number;
+    }
+    catch (...)
+    {
+        if (!emptyAllowed)
+        {
+            std::cout << "I couldn't converted "+ std::string(fieldName)<< ". Need integer number" <<std::endl;
+            return false;
+        }
+    }
+    return true;
+
+}
+
 int PerformanceTest::main(int argc, char* argv[])
 {
     std::string command = "";
@@ -164,7 +218,7 @@ int PerformanceTest::main(int argc, char* argv[])
 
     if (command=="")
     {
-        std::cout << "Please, enter one of three option (test, big, small): ";
+        std::cout << "Please, type one of three option (test, big, small, custom) and press Enter: ";
         std::cin >> command;
     }
 
@@ -190,6 +244,30 @@ int PerformanceTest::main(int argc, char* argv[])
         std::cout << "Press any key to start!"<<std::endl;
         getch();
         this->SmallPerformanceTest();
+    }
+    else if (command == "custom")
+    {
+        int elementsAmount;
+        int processorsNumber = -1;
+
+        if (!getIntNumberFromUser(elementsAmount,2,argc,argv,"matrix element amount"))
+        {
+            return 0;
+        }
+        if (!getIntNumberFromUser(processorsNumber,3,argc,argv,"number of threads", true))
+        {
+            return 0;
+        }
+
+
+        if (processorsNumber==-1)
+        {
+            this->CustomPerformanceTest(elementsAmount);
+        }
+        else
+        {
+            this->CustomPerformanceTest(elementsAmount,processorsNumber);
+        }
     }
     else
     {
