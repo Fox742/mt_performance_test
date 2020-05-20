@@ -17,7 +17,7 @@ private:
 
 public:
     Computer(bool showProgress=false);
-
+    static int getCPUNumber();
     SquareMatrix Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWork = 1, std::string header = "");
 
 };

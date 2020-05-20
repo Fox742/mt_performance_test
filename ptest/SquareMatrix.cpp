@@ -1,12 +1,12 @@
 #include "SquareMatrix.h"
 #include "MatrixRandom.h"
 
-int SquareMatrix::maxSize=11000;
+unsigned int SquareMatrix::maxSize=11000;
 
 
 SquareMatrix::SquareMatrix(int size, bool randomFill)
 {
-    int realSize = size;
+    unsigned int realSize = size;
 
     if (realSize > SquareMatrix::maxSize)
     {

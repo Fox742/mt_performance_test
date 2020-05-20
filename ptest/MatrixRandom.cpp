@@ -4,7 +4,7 @@ bool MatrixRandom::inited = false;
 
 int MatrixRandom::getNextRandom()
 {
-    int r;
+    unsigned int r;
     int low = 0;
     int high = 10;
     do

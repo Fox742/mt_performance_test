@@ -5,11 +5,16 @@
 Computer::Computer(bool showProgress):_showProgress(showProgress)
 {
     // Определяем количество ядер процессора
-    unsigned int CPUNumber = std::thread::hardware_concurrency();
-    for (int i=0;i<CPUNumber;i++)
+    unsigned int CPUNumber = getCPUNumber();
+    for (unsigned int i=0;i<CPUNumber;i++)
     {
         CPUs.push_back(CPU());
     }
+}
+
+int Computer::getCPUNumber()
+{
+    return std::thread::hardware_concurrency();
 }
 
 SquareMatrix Computer::Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWork, std::string header)
@@ -27,7 +32,7 @@ SquareMatrix Computer::Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWo
     }
 
     // Проверим - если количество задействованных процессоров больше доступных, берём число доступных процессоров
-    int _CPUToWork = CPUToWork;
+    unsigned int _CPUToWork = CPUToWork;
     if (_CPUToWork > this->CPUs.size())
     {
         _CPUToWork = this->CPUs.size();

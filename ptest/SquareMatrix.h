@@ -27,7 +27,7 @@ class SquareMatrix
 {
       private:
             std::vector<Row> rows;
-            static int maxSize;
+            static unsigned int maxSize;
       public:
             SquareMatrix(int size, bool randomFill=false);
 

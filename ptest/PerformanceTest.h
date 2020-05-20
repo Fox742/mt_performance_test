@@ -38,7 +38,7 @@ private:
 
     void ProgrammTest();                // Тест работоспособности программы, используемые мной при разработке программы
 
-    std::vector<PerformanceTest::StatisticItem>experimentSeries(std::vector<int> matrixLineSize,std::vector<int> CPUNumber, std::string folderName, unsigned int attemptsNumber = 10);
+    std::vector<PerformanceTest::StatisticItem>experimentSeries(std::vector<int> matrixLineSize, std::vector<int> CPUNumber, std::string folderName, unsigned int attemptsNumber = 10);
     // Серия эксперимент (например, эксперимент с большими матрицами и с маленькими)
 
     bool oneExpirement(int elementsNumber, int cpuNumber, int matrixSize ,double & timeSpent,int attempt); // возвращаем bool - если есть ошибка и мы до конца не умножили матрицу
@@ -46,6 +46,8 @@ private:
     void printResults(std::string folderName, std::vector<PerformanceTest::StatisticItem>statictics);
 
     void saveToFile(StatisticItem, std::string folderName);
+
+    std::vector<int> CPUNumbers = std::vector<int>({ 1, 2, 4, 6, 8, 9, 12 });
 public:
     int main(int argc, char* argv[]);
 };

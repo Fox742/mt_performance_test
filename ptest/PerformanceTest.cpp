@@ -19,8 +19,7 @@ void PerformanceTest::BigPerformanceTest()
     std::string path = "big_performance_tests";
     Utils::DeleteFolder(path);
     std::vector<int> matrixLineSizes = std::vector<int>({ 2000000, 4000000, 8000000, 10000000 });
-    std::vector<int> CPUNumbers = std::vector<int>({ 1, 2, 6, 9,12 });
-    std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes,CPUNumbers,path,1);
+    std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes, this->CPUNumbers, path,1);
     printResults(path,results);
 }
 
@@ -29,8 +28,7 @@ void PerformanceTest::SmallPerformanceTest()
     std::string path = "small_performance_tests";
     Utils::DeleteFolder(path);
     std::vector<int> matrixLineSizes = std::vector<int>({ 10000, 20000, 30000, 40000, 50000,60000,70000,80000,90000,100000 });
-    std::vector<int> CPUNumbers = std::vector<int>({ 1, 2, 6, 9,12 });
-    std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes,CPUNumbers,path,50);
+    std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes, this->CPUNumbers, path,50);
     printResults(path,results);
 }
 
@@ -41,7 +39,7 @@ void PerformanceTest::printResults(std::string folderName, std::vector<Performan
 
     if (statictics.size())
     {
-        std::cout << "RESULTS:"<<std::endl;
+        std::cout << "RESULTS MATRIXES MULTIPLYING TIME MEASUREMENT:"<<std::endl;
         unsigned int statisticsPointer = 0;
         //int dataSize = statictics[0].size();
         int dataSize;
@@ -53,11 +51,12 @@ void PerformanceTest::printResults(std::string folderName, std::vector<Performan
                     <<" ("<<statictics[statisticsPointer].sqrtSize
                     << "X"<<statictics[statisticsPointer].sqrtSize
                     << ")"<<std::endl;
+            std::cout<<"\tCPU amount:\tTime:"<<std::endl;
             do
             {
                 PerformanceTest::StatisticItem currI = statictics[statisticsPointer];
 
-                std::cout <<"\t"<< currI.CPUNumber<<"\t"<<currI.timeSpent<<std::endl;
+                std::cout <<"\t"<< currI.CPUNumber<<"\t\t"<<currI.timeSpent<<std::endl;
                 statisticsPointer++;
             }
             while ((statisticsPointer < statictics.size()) && ( dataSize == statictics[statisticsPointer].size ));
@@ -90,7 +89,7 @@ void PerformanceTest::saveToFile(StatisticItem toSave, std::string folderName)
     fout.close();
 }
 
-std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(std::vector<int> matrixLineSize,std::vector<int> CPUNumber, std::string folderName, unsigned int attemptsNumber)
+std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(std::vector<int> matrixLineSize, std::vector<int> CPUNumber,std::string folderName, unsigned int attemptsNumber)
 {
     std::vector<StatisticItem>results;
     for (unsigned int i=0;i<matrixLineSize.size();i++)
@@ -98,6 +97,8 @@ std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(st
         int matrixSize = std::sqrt(matrixLineSize[i]);
         for (unsigned int j = 0;j<CPUNumber.size();j++)
         {
+            if (CPUNumber[j] > Computer::getCPUNumber())
+                continue;
             std::vector<double>timesStatistics;
             for (unsigned int k=0;k<attemptsNumber;k++)
             {
@@ -123,7 +124,7 @@ std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(st
                             matrixLineSize[i],
                             matrixSize,
                             timeSpentAvg,
-                            CPUNumber[j]
+                            CPUNumbers[j]
                         );
             results.push_back(si);
             this->saveToFile(si,folderName);
