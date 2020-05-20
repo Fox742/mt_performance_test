@@ -5,7 +5,7 @@
 
 #if defined(_WIN32)
 #include "windows.h"
-else
+#else
 
 #endif
 
@@ -22,7 +22,7 @@ void PTestSleep(unsigned int msToSleep)
 {
 #if defined(_WIN32)
     Sleep(msToSleep);
-else
+#else
     usleep(msToSleep);
 #endif
 }

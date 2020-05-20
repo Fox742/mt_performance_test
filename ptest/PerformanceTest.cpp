@@ -280,5 +280,6 @@ int PerformanceTest::main(int argc, char* argv[])
     {
         std::cout << "I am very sorry, but I don't know to command :( ";
     }
+    std::cout<<"Programm completed!"<<std::endl;
     return 0;
 }
