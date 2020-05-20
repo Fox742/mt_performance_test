@@ -13,12 +13,12 @@ private:
     std::vector<std::pair<int,int>>getLimitsForCPU(int matrixSize,int CPUToWork);
 
     bool _showProgress;
-    void progressMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix & result,  std::vector<std::pair<int,int>> pairs);
+    void progressMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix & result,  std::vector<std::pair<int,int>> pairs, std::string header);
 
 public:
     Computer(bool showProgress=false);
 
-    SquareMatrix Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWork = 1);
+    SquareMatrix Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWork = 1, std::string header = "");
 
 };
 

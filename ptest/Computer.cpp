@@ -12,7 +12,7 @@ Computer::Computer(bool showProgress):_showProgress(showProgress)
     }
 }
 
-SquareMatrix Computer::Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWork)
+SquareMatrix Computer::Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWork, std::string header)
 {
     if (A.size()!=B.size())
     {
@@ -37,7 +37,7 @@ SquareMatrix Computer::Multiply( SquareMatrix & A, SquareMatrix & B, int CPUToWo
 
     std::vector<std::pair<int,int>>limits = getLimitsForCPU(A.size(),CPUToWork);
 
-    this->progressMultiplication(A,B,result,limits);
+    this->progressMultiplication(A,B,result,limits, header);
 
     return result;
 }
@@ -76,7 +76,7 @@ std::vector<std::pair<int,int>>Computer::getLimitsForCPU(int matrixSize,int CPUT
     return result;
 }
 
-void Computer::progressMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix & result,  std::vector<std::pair<int,int>> pairs)
+void Computer::progressMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix & result,  std::vector<std::pair<int,int>> pairs, std::string header)
 {
     for (unsigned int i=0;i<pairs.size();i++)
     {
@@ -84,28 +84,44 @@ void Computer::progressMultiplication( SquareMatrix & A, SquareMatrix & B, Squar
     }
 
     bool oneStillWorks;
+    std::vector<int>lastProcessed(pairs.size(), 0);
+    int cycleNumber=0;
     do
     {
         oneStillWorks = false;
+        bool needToPrint = false;
         for (unsigned int i=0;i<pairs.size();i++)
         {
             int total = CPUs[i].getTotal();
             int processed = CPUs[i].getProcessed();
 
-            if (_showProgress)
-            {
-                ClearScreen();
-                for (unsigned int j=0;j<pairs.size();j++)
-                {
-                    std::cout << "\tCPU"<<j<<"\t"<<CPUs[j].getProcessed()<< "\t"<<CPUs[j].getTotal()<<std::endl;
-                }
-
-            }
-
 
             if ( processed<total)
                 oneStillWorks = true;
-        }
+
+            if (_showProgress)
+            {
+                if (processed - lastProcessed[i] > 25000)
+                {
+                    needToPrint = true;
+                }
+            }
+         }
+         if ((_showProgress )&&(needToPrint || (!cycleNumber) ) )
+         {
+            ClearScreen();
+            if (header!="")
+            {
+                std::cout << header<<std::endl;
+            }
+            for (unsigned i = 0;i<pairs.size();i++)
+            {
+                int lastProcessedCPU = CPUs[i].getProcessed();
+                std::cout << "\tCPU"<<i<<"\t"<<CPUs[i].getProcessed()<< "\t"<<CPUs[i].getTotal()<<std::endl;
+                lastProcessed[i] = lastProcessedCPU;
+            }
+         }
+         cycleNumber++;
     }
     while(oneStillWorks);
 
