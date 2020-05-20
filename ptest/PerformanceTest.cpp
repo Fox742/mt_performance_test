@@ -9,7 +9,7 @@
 #include "Computer.h"
 #include "utils.h"
 #include <algorithm>
-#include <Common.h>
+#include "Common.h"
 #include <fstream>
 #include <sstream>
 
@@ -54,6 +54,7 @@ void PerformanceTest::printResults(std::string folderName, std::vector<Performan
 
     if (statictics.size())
     {
+        ClearScreen();
         std::cout << "RESULTS MATRIXES MULTIPLYING TIME MEASUREMENT:"<<std::endl;
         unsigned int statisticsPointer = 0;
         //int dataSize = statictics[0].size();
@@ -218,7 +219,13 @@ int PerformanceTest::main(int argc, char* argv[])
 
     if (command=="")
     {
-        std::cout << "Please, type one of three option (test, big, small, custom) and press Enter: ";
+        std::cout <<std::endl<< "Please, type one of three commands:"<<std::endl<<std::endl;
+        std::cout << "\t\"test+Enter\"\t to launch some Smoke tests I used while developing project"<<std::endl;
+        std::cout << "\t\"big+Enter\"\t to launch multiplication of big matrixes"<<std::endl;
+        std::cout << "\t\"small+Enter\"\t to launch multiplication of small matrixes"<<std::endl;
+        std::cout << "\t\"custom+Enter\"\t to define size of matrix need to multiply and threads to multiply with"<<std::endl;
+
+        std::cout << std::endl << "> ";
         std::cin >> command;
     }
 
@@ -273,7 +280,5 @@ int PerformanceTest::main(int argc, char* argv[])
     {
         std::cout << "I am very sorry, but I don't know to command :( ";
     }
-
-    std::cout << "Press any key to quit..."<<std::endl;
     return 0;
 }
