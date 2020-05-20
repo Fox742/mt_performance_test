@@ -58,12 +58,14 @@ std::vector<std::pair<int,int>>Computer::getLimitsForCPU(int matrixSize,int CPUT
         throw "ERROR! Number of action CPU more than matrix size";
     }
 
+    // Делим количество строк на количество потоков, а остаток от деления распределяем по потокам
     int rowsToOneCPU = (matrixSize/CPUToWork);
 
     if (matrixSize % CPUToWork >0)
         rowsToOneCPU++;
 
     int beginPointer = 0;
+    // Создаем пары, каждая из которых содержит индекс первой и последней строки области, которую должен вычислить каждый из потоков
     while (beginPointer<matrixSize)
     {
 
@@ -83,27 +85,32 @@ std::vector<std::pair<int,int>>Computer::getLimitsForCPU(int matrixSize,int CPUT
 
 void Computer::progressMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix & result,  std::vector<std::pair<int,int>> pairs, std::string header)
 {
+    // Запускаем потоки, раздав каждому из них задание умножить свою часть матрицы
+    //            (i-тому потоку вычислить элементы в строках с индексом от pairs[i].first до pairs[i].second )
     for (unsigned int i=0;i<pairs.size();i++)
     {
         CPUs[i].launchMultiplication(A,B,result,pairs[i].first,pairs[i].second);
     }
 
+    // Дальше делаем активное ожидание, что все потоки выполнят своё задание
     bool oneStillWorks;
     std::vector<int>lastProcessed(pairs.size(), 0);
     int cycleNumber=0;
     do
     {
-        oneStillWorks = false;
-        bool needToPrint = false;
+        oneStillWorks = false; // Хотя бы один поток ещё не выполнил задание
+        bool needToPrint = false; // Печатаем статистику
         for (unsigned int i=0;i<pairs.size();i++)
         {
             int total = CPUs[i].getTotal();
-            int processed = CPUs[i].getProcessed();
+            int processed = CPUs[i].getProcessed(); // Вообще говоря, по-хорошему это поле надо защищать мьютексом.
+                                                    //          Но в данном случае у нас нет в это острой необходимости
 
-
+            // Если хотя бы один поток ещё не выполнил задачу - поднимаем флаг
             if ( processed<total)
                 oneStillWorks = true;
 
+            // Каждые 25 тысяч печатаем результат сколько элементов из скольких вычислил каждый из потоков
             if (_showProgress)
             {
                 if (processed - lastProcessed[i] > 25000)
@@ -112,6 +119,8 @@ void Computer::progressMultiplication( SquareMatrix & A, SquareMatrix & B, Squar
                 }
             }
          }
+
+         // Печатаем статистику на нулевой итерации или если вычислили больше 25 тысяч жлементов после последнего вывода статистики
          if ((_showProgress )&&(needToPrint || (!cycleNumber) ) )
          {
             ClearScreen();

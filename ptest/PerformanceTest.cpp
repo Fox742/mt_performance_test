@@ -107,6 +107,8 @@ void PerformanceTest::saveToFile(StatisticItem toSave, std::string folderName)
 
 std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(std::vector<int> matrixLineSize, std::vector<int> CPUNumber,std::string folderName, unsigned int attemptsNumber)
 {
+    // Выполняем серию экспериментов: берём размеры матрицы, количество потоков, количество проб и в тройном вложенном цикле вызываем oneExperiment,
+    //             собираем статистику
     std::vector<StatisticItem>results;
     for (unsigned int i=0;i<matrixLineSize.size();i++)
     {
@@ -153,6 +155,7 @@ std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(st
 bool PerformanceTest::oneExpirement(int elementsNumber, int cpuNumber, int matrixSize ,double & timeSpent,int attempt)
 {
 
+    // Выполняем один эксперимент: создаём матрицу, перемножаем, вычисляем сколько времени это заняло
     std::string headerStr = "MULTIPLYING MATRIXES: "+std::to_string(matrixSize)+std::string("X") + std::to_string(matrixSize)+" ("+std::to_string(elementsNumber)+
             ") ATTEMPT: "+ std::to_string(attempt)+" CPU AMOUNT: "+std::to_string(cpuNumber);
 
