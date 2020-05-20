@@ -2,7 +2,7 @@
 #include "Tests.h"
 #include "string"
 #include <iostream>
-#include <conio.h>
+//#include <conio.h>
 #include <math.h>
 #include "PreciseTimer.h"
 #include "SquareMatrix.h"
@@ -226,7 +226,7 @@ int PerformanceTest::main(int argc, char* argv[])
     {
         std::cout << "Performing self-tests" <<std::endl;
         std::cout << "Press any key to start!"<<std::endl;
-        getch();
+        std::getchar();
         this->ProgrammTest();
     }
     else if (command == "big")
@@ -234,7 +234,7 @@ int PerformanceTest::main(int argc, char* argv[])
         std::cout << "You asked for performance tests with big matrixes." <<std::endl;
         std::cout << "This tests running takes long time. On conplete You will get the results on screen and folder <<big_performance_tests>>"<<std::endl;
         std::cout << "Press any key to start!"<<std::endl;
-        getch();
+        std::getchar();
         this->BigPerformanceTest();
     }
     else if (command == "small")
@@ -242,7 +242,7 @@ int PerformanceTest::main(int argc, char* argv[])
         std::cout << "You asked for performance tests with small matrixes." <<std::endl;
         std::cout << "On conplete You will get the results on screen and folder <<small_performance_tests>>"<<std::endl;
         std::cout << "Press any key to start!"<<std::endl;
-        getch();
+        std::getchar();
         this->SmallPerformanceTest();
     }
     else if (command == "custom")

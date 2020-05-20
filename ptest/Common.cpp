@@ -1,7 +1,13 @@
-#include "common.h"
+#include "Common.h"
 #include <vector>
 #include "iostream"
 #include "sstream"
+
+#if defined(_WIN32)
+#include "windows.h"
+else
+
+#endif
 
 void ClearScreen()
 {
@@ -9,5 +15,14 @@ void ClearScreen()
     std::system("cls");
 #else
     std::system ("clear");
+#endif
+}
+
+void PTestSleep(unsigned int msToSleep)
+{
+#if defined(_WIN32)
+    Sleep(msToSleep);
+else
+    usleep(msToSleep);
 #endif
 }

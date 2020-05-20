@@ -25,3 +25,5 @@ HEADERS += \
     SquareMatrix.h \
     Tests.h \
     utils.h
+
+unix:LIBS += -pthread

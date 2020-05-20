@@ -1,7 +1,7 @@
 #include "CPU.h"
 #include "thread"
 #include <memory>
-#include "windows.h"
+//#include "windows.h"
 
 void CPU::launchMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix & result, int &begin, int &end)
 {
@@ -21,13 +21,6 @@ void CPU::launchMultiplication( SquareMatrix & A, SquareMatrix & B, SquareMatrix
 
 void CPU::DoMultiplication(SquareMatrix & A, SquareMatrix & B, SquareMatrix & result, int & begin, int & end)
 {
-    /*
-    for (int i=0;i<10;i++)
-    {
-        std::cout<<"begin="<<begin<<" end="<<end<<std::endl;
-        Sleep(1000);
-    }
-    */
 
     for (int i=begin;i<=end;i++)
     {

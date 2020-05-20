@@ -6,5 +6,6 @@
 #include <string>
 
 void ClearScreen();
+void PTestSleep(unsigned int msToSleep);
 
 #endif // COMMON_H

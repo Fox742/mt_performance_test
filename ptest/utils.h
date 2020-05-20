@@ -19,6 +19,7 @@ private:
 #endif
     static bool DirExist(const std::string& path);
 
+    static bool isDirectory(std::string path);
 
 public:
     static bool TouchPath(const std::string& path, bool createDirectories=false);

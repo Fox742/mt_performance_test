@@ -1,7 +1,7 @@
 #include "utils.h"
 #include <sys/types.h> // stat
 #include <sys/stat.h> // stat
-
+#include <string.h>
 
 #if defined(_WIN32)
 #include <direct.h>   // _mkdir
@@ -9,7 +9,7 @@
 #include <fileapi.h>
 #include <tchar.h>
 #include <stdio.h>
-#include <string.h>
+
 #include <fileapi.h>
 
 using namespace std;
@@ -89,6 +89,36 @@ bool Utils::TouchPath(const std::string& path, bool createDirectories)
     default:
         return false;
     }
+}
+
+bool Utils::isDirectory(std::string path)
+{
+#if defined(_WIN32)
+    wstring wpath = wstring(path.begin(), path.end());
+    if (GetFileAttributes(wpath.c_str()) & FILE_ATTRIBUTE_DIRECTORY)
+    {
+        return true;
+    }
+    return false;
+#else
+    struct stat s;
+    if( lstat(path.c_str(),&s) == 0 )
+    {
+        if (S_ISLNK(s.st_mode))
+        {
+            return false;
+        }
+        if( s.st_mode & S_IFDIR )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return false;
+#endif
 }
 
 #if defined(_WIN32)

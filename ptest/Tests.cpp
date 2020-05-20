@@ -3,7 +3,7 @@
 #include "SquareMatrix.h"
 #include "Computer.h"
 #include "PreciseTimer.h"
-#include "windows.h"
+#include "Common.h"
 
 using namespace std;
 
@@ -154,12 +154,12 @@ void Tests::test6()
     PreciseTimer pt;
     pt.startMeasure();
     std::cout << "sleeping 10 seconds..."<<std::endl;
-    Sleep(10000);
+    PTestSleep(10000);
     cout<<pt.stopMeasure()<<std::endl;
     std::cout << "sleeping 5 seconds..."<<std::endl;
-    Sleep(5000);
+    PTestSleep(5000);
     pt.startMeasure();
     std::cout << "sleeping 15 seconds..."<<std::endl;
-    Sleep(15000);
+    PTestSleep(15000);
     cout<<pt.stopMeasure()<<std::endl;
 }
