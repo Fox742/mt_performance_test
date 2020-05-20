@@ -16,33 +16,33 @@ using namespace std;
 
 void PerformanceTest::BigPerformanceTest()
 {
+    std::string path = "big_performance_tests";
+    Utils::DeleteFolder(path);
     std::vector<int> matrixLineSizes = std::vector<int>({ 2000000, 4000000, 8000000, 10000000 });
     std::vector<int> CPUNumbers = std::vector<int>({ 1, 2, 6, 9,12 });
-    std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes,CPUNumbers);
-    printResults("big_performance_tests",results);
+    std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes,CPUNumbers,path,1);
+    printResults(path,results);
 }
 
 void PerformanceTest::SmallPerformanceTest()
 {
+    std::string path = "small_performance_tests";
+    Utils::DeleteFolder(path);
     std::vector<int> matrixLineSizes = std::vector<int>({ 10000, 20000, 30000, 40000, 50000,60000,70000,80000,90000,100000 });
     std::vector<int> CPUNumbers = std::vector<int>({ 1, 2, 6, 9,12 });
-    std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes,CPUNumbers);
-    printResults("small_performance_tests",results);
+    std::vector<PerformanceTest::StatisticItem> results = this->experimentSeries(matrixLineSizes,CPUNumbers,path,50);
+    printResults(path,results);
 }
 
 void PerformanceTest::printResults(std::string folderName, std::vector<PerformanceTest::StatisticItem>statictics)
 {
-    ofstream fout;
     ClearScreen();
-    Utils::DeleteFolder(folderName);
-    Utils::TouchPath(folderName,true);
-
     std::sort(statictics.begin(),statictics.end());
 
     if (statictics.size())
     {
         std::cout << "RESULTS:"<<std::endl;
-        int statisticsPointer = 0;
+        unsigned int statisticsPointer = 0;
         //int dataSize = statictics[0].size();
         int dataSize;
         while (statisticsPointer < statictics.size())
@@ -58,12 +58,6 @@ void PerformanceTest::printResults(std::string folderName, std::vector<Performan
                 PerformanceTest::StatisticItem currI = statictics[statisticsPointer];
 
                 std::cout <<"\t"<< currI.CPUNumber<<"\t"<<currI.timeSpent<<std::endl;
-
-
-                fout.open( folderName+"/"+ std::to_string(currI.size)+".txt", std::ios::app);
-                fout    << currI.size<<","<<currI.sqrtSize<<","<< currI.CPUNumber<<","<< currI.timeSpent<< std::endl;
-                fout.close();
-
                 statisticsPointer++;
             }
             while ((statisticsPointer < statictics.size()) && ( dataSize == statictics[statisticsPointer].size ));
@@ -87,7 +81,16 @@ void PerformanceTest::ProgrammTest()
     Tests::test6();
 }
 
-std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(std::vector<int> matrixLineSize,std::vector<int> CPUNumber)
+void PerformanceTest::saveToFile(StatisticItem toSave, std::string folderName)
+{
+    Utils::TouchPath(folderName,true);
+    ofstream fout;
+    fout.open( folderName+"/"+ std::to_string(toSave.size)+".txt", std::ios::app);
+    fout    << toSave.size<<","<<toSave.sqrtSize<<","<< toSave.CPUNumber<<","<< toSave.timeSpent<< std::endl;
+    fout.close();
+}
+
+std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(std::vector<int> matrixLineSize,std::vector<int> CPUNumber, std::string folderName, unsigned int attemptsNumber)
 {
     std::vector<StatisticItem>results;
     for (unsigned int i=0;i<matrixLineSize.size();i++)
@@ -96,7 +99,7 @@ std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(st
         for (unsigned int j = 0;j<CPUNumber.size();j++)
         {
             std::vector<double>timesStatistics;
-            for (unsigned int k=0;k<10;k++)
+            for (unsigned int k=0;k<attemptsNumber;k++)
             {
                 double timeSpent;
                 oneExpirement(matrixLineSize[i],CPUNumber[j],matrixSize,timeSpent,k);
@@ -112,17 +115,18 @@ std::vector<PerformanceTest::StatisticItem> PerformanceTest::experimentSeries(st
                 timeSpentAvg /= ((double)timesStatistics.size());
 
 
-            // Сохранение информации об эксперименте
-            results.push_back(
-                        StatisticItem
-                            (
-                                matrixLineSize[i],
-                                matrixSize,
-                                timeSpentAvg,
-                                CPUNumber[j]
-                            )
+            // Сохранение информации об эксперименте (в вектор и в файл).
+            // В файл сохраняем сразу чтобы в случае если программа упала до завершения - чтобы мы знали промежуточные результаты
+            StatisticItem si =
+                    StatisticItem
+                        (
+                            matrixLineSize[i],
+                            matrixSize,
+                            timeSpentAvg,
+                            CPUNumber[j]
                         );
-
+            results.push_back(si);
+            this->saveToFile(si,folderName);
 
         }
     }

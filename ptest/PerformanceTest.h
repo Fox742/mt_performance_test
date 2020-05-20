@@ -38,13 +38,14 @@ private:
 
     void ProgrammTest();                // Тест работоспособности программы, используемые мной при разработке программы
 
-    std::vector<PerformanceTest::StatisticItem>experimentSeries(std::vector<int> matrixLineSize,std::vector<int> CPUNumber);
+    std::vector<PerformanceTest::StatisticItem>experimentSeries(std::vector<int> matrixLineSize,std::vector<int> CPUNumber, std::string folderName, unsigned int attemptsNumber = 10);
     // Серия эксперимент (например, эксперимент с большими матрицами и с маленькими)
 
     bool oneExpirement(int elementsNumber, int cpuNumber, int matrixSize ,double & timeSpent,int attempt); // возвращаем bool - если есть ошибка и мы до конца не умножили матрицу
 
     void printResults(std::string folderName, std::vector<PerformanceTest::StatisticItem>statictics);
 
+    void saveToFile(StatisticItem, std::string folderName);
 public:
     int main(int argc, char* argv[]);
 };
