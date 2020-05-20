@@ -67,7 +67,7 @@ void PerformanceTest::printResults(std::string folderName, std::vector<Performan
                     <<" ("<<statictics[statisticsPointer].sqrtSize
                     << "X"<<statictics[statisticsPointer].sqrtSize
                     << ")"<<std::endl;
-            std::cout<<"\tCPU amount:\tTime:"<<std::endl;
+            std::cout<<"\tCPU amount:\tTime (seconds):"<<std::endl;
             do
             {
                 PerformanceTest::StatisticItem currI = statictics[statisticsPointer];
