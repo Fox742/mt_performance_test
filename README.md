@@ -22,38 +22,38 @@
 
 RESULTS MATRIXES MULTIPLYING TIME MEASUREMENT:  
 SIZE: 2000000 (1414X1414)  
-        CPU amount:     Time:  
-        1               105.653  
-        2               54.7714  
-        4               29.0473  
-        6               23.5544  
-        8               20.4794  
-        9               18.6496  
-        12              15.2686  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbspCPU amount:     Time:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp1               105.653  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp2               54.7714  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp4               29.0473  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp6               23.5544  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp8               20.4794  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp9               18.6496  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp12              15.2686  
 SIZE: 4000000 (2000X2000)  
-        CPU amount:     Time:  
-        1               332.076  
-        2               166.589  
-        4               93.5608  
-        6               73.1498  
-        8               60.8784  
-        9               56.2641  
-        12              50.9823  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbspCPU amount:     Time:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp1               332.076  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp2               166.589  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp4               93.5608  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp6               73.1498  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp8               60.8784  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp9               56.2641  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp12              50.9823  
 SIZE: 8000000 (2828X2828)  
-        CPU amount:     Time:  
-        1               906.695  
-        2               458.498  
-        4               255.85  
-        6               199.818  
-        8               173.113  
-        9               160.066  
-        12              146.542  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbspCPU amount:     Time:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp1               906.695  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp2               458.498  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp4               255.85  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp6               199.818  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp8               173.113  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp9               160.066  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp12              146.542  
 SIZE: 10000000 (3162X3162)  
-        CPU amount:     Time:  
-        1               1272  
-        2               635.295  
-        4               375.263  
-        6               294.152  
-        8               253.171  
-        9               237.27  
-        12              211.899  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbspCPU amount:     Time:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp1               1272  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp2               635.295  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp4               375.263  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp6               294.152  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp8               253.171  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp9               237.27  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp12              211.899  
